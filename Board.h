@@ -14,7 +14,7 @@ public:
     Each element of the Array represents a box on the board
     Filled with either Xs or Os
     O is for the computer, X is for the player*/
-    std::string Board[3][3];
+    char Board[3][3];
 
     //Constructor
     TicTacToe();

@@ -1,16 +1,16 @@
 #include "AI.h"
 
-int AI::BestMove(std::string Board[3][3]) {
+int AI::BestMove(char Board[3][3]) {
     // AI to make its turn
     int bestScore = -1000;
     int move;
     for (int i = 0; i < 3; i++) {
         for (int j = 0; j < 3; j++) {
             // Is the spot available?
-            if (Board[i][j] == " ") {
-                Board[i][j] = "O";
+            if (Board[i][j] == ' ') {
+                Board[i][j] = 'O';
                 int score = Minimax(Board, 0, false);
-                Board[i][j] = " ";
+                Board[i][j] = ' ';
                 if (score > bestScore) {
                     bestScore = score;
                     move = 3 * i + j;
@@ -21,14 +21,14 @@ int AI::BestMove(std::string Board[3][3]) {
     return move;
 }
 
-int AI::Minimax(std::string Board[3][3], int depth, bool bIsMaximizing) {
+int AI::Minimax(char Board[3][3], int depth, bool bIsMaximizing) {
     //Check if the game is at an end state
-    std::string result = CheckWinner(Board);
-    if (result != " ") {
-        if (result == "X") {
+    char result = CheckWinner(Board);
+    if (result != ' ') {
+        if (result == 'X') {
             return -10 - depth;
         }
-        else if (result == "O") {
+        else if (result == 'O') {
             return 10 - depth;
         }
         else {
@@ -42,10 +42,10 @@ int AI::Minimax(std::string Board[3][3], int depth, bool bIsMaximizing) {
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 // Is the spot available?
-                if (Board[i][j] == " ") {
-                    Board[i][j] = "O";
+                if (Board[i][j] == ' ') {
+                    Board[i][j] = 'O';
                     Score = Minimax(Board, depth + 1, false);
-                    Board[i][j] = " ";
+                    Board[i][j] = ' ';
                     if (Score > BestScore) {
                         BestScore = Score;
                     }
@@ -60,10 +60,10 @@ int AI::Minimax(std::string Board[3][3], int depth, bool bIsMaximizing) {
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 // Is the spot available?
-                if (Board[i][j] == " ") {
-                    Board[i][j] = "X";
+                if (Board[i][j] == ' ') {
+                    Board[i][j] = 'X';
                     Score = Minimax(Board, depth + 1, true);
-                    Board[i][j] = " ";
+                    Board[i][j] = ' ';
                     if (Score < WorstScore) {
                         WorstScore = Score;
                     }
@@ -74,8 +74,8 @@ int AI::Minimax(std::string Board[3][3], int depth, bool bIsMaximizing) {
     }
 }
 
-std::string AI::CheckWinner(std::string Board[3][3]) {
-    std::string winner = " ";
+char AI::CheckWinner(char Board[3][3]) {
+    char winner = ' ';
 
     for (int i = 0; i < 3; i++) {
         //Horizontal
@@ -99,14 +99,14 @@ std::string AI::CheckWinner(std::string Board[3][3]) {
     int openSpots = 0;
     for (int i = 0; i < 3; i++) {
         for (int j = 0; j < 3; j++) {
-            if (Board[i][j] == " ") {
+            if (Board[i][j] == ' ') {
                 openSpots++;
             }
         }
     }
 
-    if (winner == " " && openSpots == 0) {
-        return "tie";
+    if (winner == ' ' && openSpots == 0) {
+        return 'T';
     }
     else {
         return winner;

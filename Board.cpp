@@ -4,7 +4,7 @@ TicTacToe::TicTacToe() {
     EmptyBoxes = 9;
     for (int y = 0; y < 3; y++) {
         for (int x = 0; x < 3; x++) {
-            Board[y][x] = " ";
+            Board[y][x] = ' ';
         }
     }
 }
@@ -24,7 +24,7 @@ void TicTacToe::ShowBoard() {
 }
 
 void TicTacToe::NextTurn(int pos) {
-    Board[pos / 3][pos % 3] = "O";
+    Board[pos / 3][pos % 3] = 'O';
     EmptyBoxes--;
 }
 
@@ -36,9 +36,9 @@ void TicTacToe::GetUserInput() {
             scanf_s("%d,%d", &x, &y);
             x--, y--;
         } while ((y < 0 || y > 2) || (x < 0 || x > 2));
-    } while (Board[x][y] != " ");
+    } while (Board[x][y] != ' ');
 
-    Board[x][y] = "X";
+    Board[x][y] = 'X';
     EmptyBoxes--;
 }
 
@@ -47,7 +47,7 @@ int TicTacToe::CheckIfWon() const {
         return 1;
     }
     else {
-        std::string symbols[2] = { "X", "O"};
+        char symbols[2] = { 'X', 'O'};
         int returnstatus[2] = { 2, 3 };
         bool flag;
         for (int i = 0; i < 2; i++) {

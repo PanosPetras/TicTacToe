@@ -7,10 +7,10 @@
 
 class AI {
 public:
-	int BestMove(std::string Board[3][3]);
+	int BestMove(char Board[3][3]);
 
-	int Minimax(std::string Board[3][3], int depth, bool bIsMaximizing);
+	int Minimax(char Board[3][3], int depth, bool bIsMaximizing);
 
-	std::string CheckWinner(std::string Board[3][3]);
+	char CheckWinner(char Board[3][3]);
 };
 #endif // !AI_H
