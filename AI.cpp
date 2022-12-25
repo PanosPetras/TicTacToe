@@ -9,8 +9,9 @@ int AI::BestMove(char Board[3][3]) {
             // Is the spot available?
             if (Board[i][j] == ' ') {
                 Board[i][j] = 'O';
-                int score = Minimax(Board, 0, false);
+                int score = AlphaBeta(Board, 0, -1000, 1000, false);
                 Board[i][j] = ' ';
+
                 if (score > bestScore) {
                     bestScore = score;
                     move = 3 * i + j;
@@ -21,7 +22,15 @@ int AI::BestMove(char Board[3][3]) {
     return move;
 }
 
-int AI::Minimax(char Board[3][3], int depth, bool bIsMaximizing) {
+inline int max(int a, int b) {
+    return a > b ? a : b;
+}
+
+inline int min(int a, int b) {
+    return a < b ? a : b;
+}
+
+int AI::AlphaBeta(char Board[3][3], int depth, int a, int b, bool bIsMaximizing) {
     //Check if the game is at an end state
     char result = CheckWinner(Board);
     if (result != ' ') {
@@ -44,8 +53,12 @@ int AI::Minimax(char Board[3][3], int depth, bool bIsMaximizing) {
                 // Is the spot available?
                 if (Board[i][j] == ' ') {
                     Board[i][j] = 'O';
-                    Score = Minimax(Board, depth + 1, false);
+                    Score = AlphaBeta(Board, depth + 1, a, b, false);
                     Board[i][j] = ' ';
+
+                    b = min(b, Score);
+                    //if (Score < a) return BestScore;
+
                     if (Score > BestScore) {
                         BestScore = Score;
                     }
@@ -53,8 +66,7 @@ int AI::Minimax(char Board[3][3], int depth, bool bIsMaximizing) {
             }
         }
         return BestScore;
-    }
-    else {
+    } else {
         int WorstScore = 1000;
         int Score;
         for (int i = 0; i < 3; i++) {
@@ -62,8 +74,12 @@ int AI::Minimax(char Board[3][3], int depth, bool bIsMaximizing) {
                 // Is the spot available?
                 if (Board[i][j] == ' ') {
                     Board[i][j] = 'X';
-                    Score = Minimax(Board, depth + 1, true);
+                    Score = AlphaBeta(Board, depth + 1, a, b, true);
                     Board[i][j] = ' ';
+
+                    a = max(a, Score);
+                    //if (Score >= b) return WorstScore;
+
                     if (Score < WorstScore) {
                         WorstScore = Score;
                     }

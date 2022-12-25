@@ -9,17 +9,9 @@ TicTacToe::TicTacToe() {
     }
 }
 
-void TicTacToe::ShowBoard() {
-    for (int y = 0; y < 3; y++) {
-        for (int x = 0; x < 3; x++) {
-            if (x == 1) {
-                std::cout << " | " << Board[y][x] << " | ";
-            }
-            else {
-                std::cout << Board[y][x];
-            }
-        }
-        std::cout << std::endl;
+void TicTacToe::ShowBoard() const {
+    for (int i = 0; i < 3; i++) {
+        std::cout << Board[i][0] << " | " << Board[i][1] << " | " << Board[i][2] << std::endl;
     }
 }
 
@@ -34,11 +26,11 @@ void TicTacToe::GetUserInput() {
         std::cout << "Please enter the position of your box:" << std::endl;
         do {
             scanf_s("%d,%d", &x, &y);
-            x--, y--;
+            x--, y = 3 - y;
         } while ((y < 0 || y > 2) || (x < 0 || x > 2));
-    } while (Board[x][y] != ' ');
+    } while (Board[y][x] != ' ');
 
-    Board[x][y] = 'X';
+    Board[y][x] = 'X';
     EmptyBoxes--;
 }
 

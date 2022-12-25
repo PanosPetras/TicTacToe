@@ -20,7 +20,7 @@ public:
     TicTacToe();
 
     //Print the game board to the screen
-    void ShowBoard();
+    void ShowBoard() const;
 
     void NextTurn(int pos);
 

@@ -9,7 +9,7 @@ class AI {
 public:
 	int BestMove(char Board[3][3]);
 
-	int Minimax(char Board[3][3], int depth, bool bIsMaximizing);
+	int AlphaBeta(char Board[3][3], int depth, int a, int b, bool bIsMaximizing);
 
 	char CheckWinner(char Board[3][3]);
 };

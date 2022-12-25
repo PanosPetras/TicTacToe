@@ -3,13 +3,17 @@
 #include <iostream>
 #include <Windows.h>
 
+inline void Render(TicTacToe ttt) {
+	system("cls");
+	ttt.ShowBoard();
+}
+
 int main() {
 	TicTacToe ttt;
 	AI ai;
 
 	while (!ttt.CheckIfWon()) {
-		system("cls");
-		ttt.ShowBoard();
+		Render(ttt);
 		ttt.GetUserInput();
 
 		if (!ttt.CheckIfWon()) {
@@ -17,8 +21,7 @@ int main() {
 		}
 	}
 
-	system("cls");
-	ttt.ShowBoard();
+	Render(ttt);
 
 	if (ttt.CheckIfWon() == 2) {
 		std::cout << "The player won!";
