@@ -2,14 +2,14 @@
 
 int AI::BestMove(char Board[3][3]) {
     // AI to make its turn
-    int bestScore = -1000;
+    int bestScore = -1000, score;
     int move;
     for (int i = 0; i < 3; i++) {
         for (int j = 0; j < 3; j++) {
             // Is the spot available?
             if (Board[i][j] == ' ') {
                 Board[i][j] = 'O';
-                int score = AlphaBeta(Board, 0, -1000, 1000, false);
+                score = AlphaBeta(Board, 0, -1000, 1000, false);
                 Board[i][j] = ' ';
 
                 if (score > bestScore) {
@@ -47,42 +47,32 @@ int AI::AlphaBeta(char Board[3][3], int depth, int a, int b, bool bIsMaximizing)
     //Investigate incursively all the possible moves
     if (bIsMaximizing) {
         int BestScore = -1000;
-        int Score;
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 // Is the spot available?
                 if (Board[i][j] == ' ') {
                     Board[i][j] = 'O';
-                    Score = AlphaBeta(Board, depth + 1, a, b, false);
+                    BestScore = max(BestScore, AlphaBeta(Board, depth + 1, a, b, false));
                     Board[i][j] = ' ';
 
-                    b = min(b, Score);
-                    //if (Score < a) return BestScore;
-
-                    if (Score > BestScore) {
-                        BestScore = Score;
-                    }
+                    a = max(a, BestScore);
+                    if (BestScore >= b) return BestScore;
                 }
             }
         }
         return BestScore;
     } else {
         int WorstScore = 1000;
-        int Score;
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 // Is the spot available?
                 if (Board[i][j] == ' ') {
                     Board[i][j] = 'X';
-                    Score = AlphaBeta(Board, depth + 1, a, b, true);
+                    WorstScore = min(WorstScore, AlphaBeta(Board, depth + 1, a, b, true));
                     Board[i][j] = ' ';
 
-                    a = max(a, Score);
-                    //if (Score >= b) return WorstScore;
-
-                    if (Score < WorstScore) {
-                        WorstScore = Score;
-                    }
+                    b = min(b, WorstScore);
+                    if (WorstScore < a) return WorstScore;
                 }
             }
         }
